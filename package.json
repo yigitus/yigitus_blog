@@ -12,8 +12,11 @@
     "cypress:open": "cypress open"
   },
   "dependencies": {
+    "@prisma/client": "^5.20.0",
     "@types/jest": "^29.5.13",
     "next": "14.2.14",
+    "pg": "^8.13.0",
+    "prisma": "^5.20.0",
     "react": "^18",
     "react-dom": "^18",
     "ts-node": "^10.9.2"

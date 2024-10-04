@@ -1,7 +1,26 @@
 import Image from "next/image";
 import styles from "./page.module.css";
+import prisma from "../../../lib/prisma";
 
-export default function Home() {
+interface Post {
+  id: string;
+  title: string;
+  content: string | null;
+  published: boolean;
+  slug: string;
+}
+
+async function fetchPosts(): Promise<Post[]> {
+  const posts = await prisma.post.findMany({
+    where: { published: true },
+  });
+  return posts;
+}
+
+export default async function Home() {
+  const posts = await fetchPosts();
+  console.log(posts);
+
   return (
     <div className={styles.page}>
       <div className={styles.main}>
@@ -21,27 +40,22 @@ export default function Home() {
         </ol>
 
         <div className={styles.ctas}>
-          <a
-            className={styles.primary}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className={styles.logo}
-              src="https://nextjs.org/icons/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            href="/single_post"
-            className={styles.secondary}
-          >
-            single post
-          </a>
+          <div className="posts">
+            <h2>Posts</h2>
+            <ul>
+              {posts.map((post) => (
+                <>
+                  <li key={post.id}>{post.title}</li>
+                  <a
+                    href={"/single_post/" + post.slug}
+                    className={styles.secondary}
+                  >
+                    go to article
+                  </a>
+                </>
+              ))}
+            </ul>
+          </div>
         </div>
       </div>
     </div>
