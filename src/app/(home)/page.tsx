@@ -19,8 +19,6 @@ async function fetchPosts(): Promise<Post[]> {
 
 export default async function Home() {
   const posts = await fetchPosts();
-  console.log(posts);
-
   return (
     <div className={styles.page}>
       <div className={styles.main}>
@@ -47,7 +45,7 @@ export default async function Home() {
                 <>
                   <li key={post.id}>{post.title}</li>
                   <a
-                    href={"/single_post/" + post.slug}
+                    href={"/post/" + post.slug}
                     className={styles.secondary}
                   >
                     go to article
