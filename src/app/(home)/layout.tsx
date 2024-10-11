@@ -2,7 +2,8 @@ import { ReactNode } from "react";
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "../globals.css";
-import "./layout.css"
+import "./layout.css";
+import Header from "@/components/Header";
 
 const geistSans = localFont({
   src: "../fonts/GeistVF.woff",
@@ -24,7 +25,8 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
-        <header role="heading" aria-level={1}></header>
+        <Header />
+        {/* <div className="hero"></div> */}
         <main>{children}</main>
         <aside></aside>
         <footer></footer>

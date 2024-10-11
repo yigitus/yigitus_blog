@@ -4,13 +4,17 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url = env("POSTGRES_PRISMA_URL") // uses connection pooling
+  url      = env("POSTGRES_PRISMA_URL") // uses connection pooling
 }
 
 model Post {
-  id        String     @default(cuid()) @id
-  title     String
-  content   String?
-  published Boolean    @default(false)
-  slug      String     @unique
+  id             String    @id @default(cuid())
+  title          String
+  content        String?
+  published      Boolean   @default(false)
+  slug           String    @unique
+  publish_date   DateTime?
+  tags           String[]  @default([])
+  featured_image String?   @default("https://picsum.photos/500/500")
+  description    String?
 }

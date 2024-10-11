@@ -5,18 +5,21 @@ body {
 }
 
 header {
-  grid-area: 1 / 1 / 1 / 12;
+  grid-area: 1 / 1 / 1 / 13;
+  border-bottom: 2px solid var(--background-muted);
 }
 
 main {
   min-height: calc(100vh - 6.25rem);
   grid-area: 2 / 1 / 2 / 11;
   background-color: var(--background-muted);
+  /* padding: 200px 150px 0 150px; */
 }
 
 aside {
   grid-area: 2 / 11 / 2 / 13;
-  background-color: var(--background-muted);
+  background-color: var(--background);
+  border-left: 2px solid var(--background-muted);
 }
 
 footer {

@@ -1,21 +1,10 @@
-import prisma from "../../../../lib/prisma";
 import { remark } from "remark";
+import styles from "./page.module.css";
 import html from "remark-html";
-
-interface Post {
-  id: string;
-  title: string;
-  content: string | null;
-  published: boolean;
-  slug: string;
-}
+import { fetchPostFromSlug } from "@/app/services/postService";
 
 export default async function Post({ params }: { params: { id: string } }) {
-  const post = await prisma.post.findUnique({
-    where: {
-      slug: params.id,
-    },
-  });
+  const post = await fetchPostFromSlug(params.id);
 
   // Unescapes the \n 's
   if (post && post.content) {
@@ -27,9 +16,12 @@ export default async function Post({ params }: { params: { id: string } }) {
     : "Empty post";
 
   return (
-    <div
-      className="post_content"
-      dangerouslySetInnerHTML={{ __html: content }}
-    ></div>
+    <div className={styles.container}>
+      <h1 className={styles.title}>{post.title}</h1>
+      <div
+        className={styles.post_content}
+        dangerouslySetInnerHTML={{ __html: content }}
+      ></div>
+    </div>
   );
 }

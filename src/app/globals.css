@@ -1,14 +1,18 @@
 :root {
-  --background: #ffffff;
+  --background: #f7f8f9;
   --background-muted: #f0f0f0;
   --foreground: #171717;
+  --foreground-muted: #32383d;
+  --primary: #007bff;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --background-muted: #1a1a1a;
+    --background: #1a1a1a;
+    --background-muted: #252424;
     --foreground: #ededed;
+    --foreground-muted: #cfcfcf;
+    --primary: #007bff;
   }
 }
 

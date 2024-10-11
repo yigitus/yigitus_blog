@@ -1,60 +1,52 @@
-import Image from "next/image";
+/* eslint-disable @next/next/no-img-element */
 import styles from "./page.module.css";
-import prisma from "../../../lib/prisma";
-
-interface Post {
-  id: string;
-  title: string;
-  content: string | null;
-  published: boolean;
-  slug: string;
-}
-
-async function fetchPosts(): Promise<Post[]> {
-  const posts = await prisma.post.findMany({
-    where: { published: true },
-  });
-  return posts;
-}
+import { fetchPublishedPosts } from "../services/postService";
 
 export default async function Home() {
-  const posts = await fetchPosts();
-  return (
-    <div className={styles.page}>
-      <div className={styles.main}>
-        <Image
-          className={styles.logo}
-          src="https://nextjs.org/icons/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol>
-          <li>
-            Get started by editing <code>src/app/page.tsx</code>.
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+  const latestPosts = await fetchPublishedPosts(12);
 
-        <div className={styles.ctas}>
-          <div className="posts">
-            <h2>Posts</h2>
-            <ul>
-              {posts.map((post) => (
-                <>
-                  <li key={post.id}>{post.title}</li>
-                  <a
-                    href={"/post/" + post.slug}
-                    className={styles.secondary}
-                  >
-                    go to article
+  return (
+    <div className={styles.container}>
+      <h2>Latest Posts</h2>
+      <div id={styles.latest}>
+        {latestPosts.map((post, index) => (
+          <div key={post.id} className={styles.post}>
+            {post.featured_image && (
+              <a href={"/post/" + post.slug}>
+                <img
+                  src={post.featured_image}
+                  className={styles.featured_image}
+                  alt=""
+                />
+              </a>
+            )}
+            {post.tags.length > 0 && (
+              <div className={styles.tags}>
+                {post.tags.slice(0, 3).map((tag) => (
+                  <a key={post.id + tag} href="" className={styles.tag}>
+                    {tag}
                   </a>
-                </>
-              ))}
-            </ul>
+                ))}
+              </div>
+            )}
+            <a href={"/post/" + post.slug} className={styles.title}>
+              {post.title}
+            </a>
+            {index === 0 && (
+              <p className={styles.description}>{post.description}</p>
+            )}
+            <div className={styles.metadata}>
+              {post.publish_date && (
+                <time dateTime={post.publish_date.toISOString()}>
+                  {post.publish_date.toLocaleDateString()}
+                </time>
+              )}
+              <a href={"/post/" + post.slug} className={styles.read_more}>
+                Read more
+              </a>
+            </div>
           </div>
-        </div>
+        ))}
       </div>
     </div>
   );
