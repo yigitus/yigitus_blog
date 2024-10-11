@@ -1,7 +1,7 @@
 import { remark } from "remark";
 import styles from "./page.module.css";
 import html from "remark-html";
-import { fetchPostFromSlug } from "@/app/services/postService";
+import { fetchPostFromSlug } from "@/services/postService";
 
 export default async function Post({ params }: { params: { id: string } }) {
   const post = await fetchPostFromSlug(params.id);

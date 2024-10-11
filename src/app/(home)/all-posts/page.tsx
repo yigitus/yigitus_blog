@@ -1,15 +1,14 @@
 /* eslint-disable @next/next/no-img-element */
 import styles from "./page.module.css";
-import { fetchPublishedPosts } from "../../services/postService";
+import { fetchPublishedPosts } from "@/services/postService";
 
-export default async function Home() {
-  const latestPosts = await fetchPublishedPosts(12);
-
+export default async function AllPosts() {
+  const allPosts = await fetchPublishedPosts(10);
   return (
     <div className={styles.container}>
-      <h2>Latest Posts</h2>
-      <div id={styles.latest}>
-        {latestPosts.map((post, index) => (
+      <h1 className={styles.title}>All Posts</h1>
+      <div className={styles.posts}>
+      {allPosts.map((post) => (
           <div key={post.id} className={styles.post}>
             {post.featured_image && (
               <a href={"/post/" + post.slug}>
@@ -32,7 +31,7 @@ export default async function Home() {
             <a href={"/post/" + post.slug} className={styles.title}>
               {post.title}
             </a>
-            {index === 0 && (
+            {post.description && (
               <p className={styles.description}>{post.description}</p>
             )}
             <div className={styles.metadata}>
@@ -47,8 +46,8 @@ export default async function Home() {
             </div>
           </div>
         ))}
+        
       </div>
-      <a href={"/all-posts"} className={styles.see_all} >See all posts</a>
     </div>
   );
 }
