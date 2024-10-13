@@ -7,9 +7,10 @@ import { useEffect, useState, useRef } from "react";
 export default function AllPosts() {
   const [allPosts, setAllPosts] = useState<Post[]>([]);
   const [page, setPage] = useState(1);
+  const [isAllPostsLoaded, setIsAllPostsLoaded] = useState(false);
   // const [loading, setLoading] = useState(false);
+  const postsPerPage = 10;
   const initialRender = useRef(true); //To prevent strict mode double rendering
-  const postsPerPage = 2;
 
   async function fetchMorePosts() {
     if (initialRender.current) {
@@ -27,11 +28,18 @@ export default function AllPosts() {
           throw new Error(`Error fetching posts: ${res.statusText}`);
         }
 
+        if (res.status === 204) {
+          setIsAllPostsLoaded(true);
+          return;
+        }
+
         const newPosts = await res.json();
 
         if (!Array.isArray(newPosts)) {
           throw new Error("Invalid response format");
         }
+
+        console.log(res.status);
 
         setAllPosts((prevPosts: Post[]) => [...prevPosts, ...newPosts]);
         setPage((prevPage) => prevPage + 1);
@@ -45,11 +53,12 @@ export default function AllPosts() {
 
   useEffect(() => {
     fetchMorePosts(); // Fetch initial posts
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []); // Run once on component mount
 
   return (
     <div className={styles.container}>
-      <h1 className={styles.title}>All Posts</h1>
+      <h2 className={styles.title}>All Posts</h2>
       <div className={styles.posts}>
         {allPosts.map((post) => (
           <div key={post.id} className={styles.post}>
@@ -71,7 +80,11 @@ export default function AllPosts() {
                 ))}
               </div>
             )}
-            <a target="_blank" href={"/post/" + post.slug} className={styles.title}>
+            <a
+              target="_blank"
+              href={"/post/" + post.slug}
+              className={styles.title}
+            >
               {post.title}
             </a>
             {post.description && (
@@ -83,7 +96,11 @@ export default function AllPosts() {
                 //   {post.publish_date.toLocaleDateString()}
                 // </time>
               )} */}
-              <a target="_blank" href={"/post/" + post.slug} className={styles.read_more}>
+              <a
+                target="_blank"
+                href={"/post/" + post.slug}
+                className={styles.read_more}
+              >
                 Read more
               </a>
             </div>
@@ -91,9 +108,13 @@ export default function AllPosts() {
         ))}
       </div>
 
-      <button onClick={fetchMorePosts} className={styles.see_more}>
-        See More
-      </button>
+      {isAllPostsLoaded ? (
+        <p className={styles.all_posts_loaded}>All posts loaded</p>
+      ) : (
+        <button onClick={fetchMorePosts} className={styles.see_more}>
+          See More
+        </button>
+      )}
     </div>
   );
 }
