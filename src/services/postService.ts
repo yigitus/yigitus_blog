@@ -1,4 +1,3 @@
-// src/services/postService.ts
 import prisma from "../../lib/prisma";
 
 export type Post = {
@@ -15,29 +14,26 @@ export type Post = {
 
 /**
  * Fetches a list of published posts from the database.
- * @param count The number of posts to fetch.
- * @param offset The number of posts to skip.
+ * @param limit The number of posts to fetch.
+ * @param page The page number to fetch (1-based).
  * @returns The list of posts.
- * @throws If the posts do not exist.
  */
 export async function fetchPublishedPosts(
-  count?: number,
-  offset?: number
+  limit: number = 10, // Default to 10 if not specified
+  page: number = 1 // Default to page 1 if not specified
 ): Promise<Post[]> {
+  const offset = (page - 1) * limit; // Calculate offset based on page and limit
+
   const posts = await prisma.post.findMany({
     where: { published: true },
     orderBy: {
       publish_date: "desc",
     },
-    take: count,
+    take: limit,
     skip: offset,
   });
-  if (!posts) {
-    throw new Error("No posts found");
-  }
   return posts;
 }
-
 /**
  * Fetches a single post from the slug.
  * @param slug The slug of the post.

@@ -3,7 +3,7 @@ import styles from "./page.module.css";
 import { fetchPublishedPosts } from "../../services/postService";
 
 export default async function Home() {
-  const latestPosts = await fetchPublishedPosts(12);
+  const latestPosts = await fetchPublishedPosts(5);
 
   return (
     <div className={styles.container}>
@@ -12,7 +12,7 @@ export default async function Home() {
         {latestPosts.map((post, index) => (
           <div key={post.id} className={styles.post}>
             {post.featured_image && (
-              <a href={"/post/" + post.slug}>
+              <a target="_blank" href={"/post/" + post.slug}>
                 <img
                   src={post.featured_image}
                   className={styles.featured_image}
@@ -23,7 +23,12 @@ export default async function Home() {
             {post.tags.length > 0 && (
               <div className={styles.tags}>
                 {post.tags.slice(0, 3).map((tag) => (
-                  <a key={post.id + tag} href="" className={styles.tag}>
+                  <a
+                    target="_blank"
+                    key={post.id + tag}
+                    href=""
+                    className={styles.tag}
+                  >
                     {tag}
                   </a>
                 ))}
@@ -41,14 +46,20 @@ export default async function Home() {
                   {post.publish_date.toLocaleDateString()}
                 </time>
               )}
-              <a href={"/post/" + post.slug} className={styles.read_more}>
+              <a
+                target="_blank"
+                href={"/post/" + post.slug}
+                className={styles.read_more}
+              >
                 Read more
               </a>
             </div>
           </div>
         ))}
       </div>
-      <a href={"/all-posts"} className={styles.see_all} >See all posts</a>
+      <a href={"/all-posts"} className={styles.see_all}>
+        See all posts
+      </a>
     </div>
   );
 }
