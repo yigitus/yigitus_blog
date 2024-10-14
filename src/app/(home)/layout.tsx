@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "../globals.css";
 import "./layout.css";
-import { Header } from "@/components";
+import { Footer, Header } from "@/components";
 import { Sidebar } from "@/components";
 
 const geistSans = localFont({
@@ -30,7 +30,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         {/* <div className="hero"></div> */}
         <main>{children}</main>
         <Sidebar />
-        <footer></footer>
+        <Footer />
       </body>
     </html>
   );

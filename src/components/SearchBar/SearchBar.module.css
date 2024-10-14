@@ -25,10 +25,10 @@
 }
 
 .search_bar .input a {
-  padding: 11px 20px;
-
+  padding: 13px 20px 9px 20px;
 }
 
 .search_bar .input [role="button"]:hover {
   background-color: #f0f0f0;
+  color: #333;
 }
