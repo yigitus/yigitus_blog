@@ -1,4 +1,5 @@
 import { searchPosts } from "@/services/postService";
+import { NextResponse } from "next/server";
 
 export async function GET(request: { url: string | URL }) {
   const { searchParams } = new URL(request.url);
@@ -9,8 +10,8 @@ export async function GET(request: { url: string | URL }) {
   const posts = await searchPosts(query, page, limit);
 
   if (posts && posts.length > 0) {
-    return new Response(JSON.stringify(posts), { status: 200 });
+    return new NextResponse(JSON.stringify(posts), { status: 200 });
   } else {
-    return new Response(null, { status: 204 });
+    return new NextResponse(null, { status: 204 });
   }
 }
