@@ -51,7 +51,7 @@ export default async function Home() {
                 href={"/post/" + post.slug}
                 className={styles.read_more}
               >
-                Read more
+                Read More
               </a>
             </div>
           </div>

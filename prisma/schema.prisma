@@ -17,4 +17,5 @@ model Post {
   tags           String[]  @default([])
   featured_image String?   @default("https://picsum.photos/500/500")
   description    String?
+  reads          Int       @default(0)
 }

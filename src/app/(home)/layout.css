@@ -11,15 +11,15 @@ header {
 
 main {
   min-height: calc(100vh - 6.25rem);
-  grid-area: 2 / 1 / 2 / 11;
+  grid-area: 2 / 1 / 2 / 9;
   background-color: var(--background-muted);
   /* padding: 200px 150px 0 150px; */
 }
 
 aside {
-  grid-area: 2 / 11 / 2 / 13;
-  background-color: var(--background);
-  border-left: 2px solid var(--background-muted);
+  grid-area: 2 / 9 / 2 / 13;
+  background-color: var(--background-muted);
+  /* border-left: 2px solid var(--background); */
 }
 
 footer {

@@ -4,6 +4,7 @@ import localFont from "next/font/local";
 import "../globals.css";
 import "./layout.css";
 import Header from "@/components/Header";
+import Sidebar from "@/components/Sidebar";
 
 const geistSans = localFont({
   src: "../fonts/GeistVF.woff",
@@ -28,7 +29,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <Header />
         {/* <div className="hero"></div> */}
         <main>{children}</main>
-        <aside></aside>
+        <Sidebar />
         <footer></footer>
       </body>
     </html>

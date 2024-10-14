@@ -1,7 +1,7 @@
 import { remark } from "remark";
 import styles from "./page.module.css";
 import html from "remark-html";
-import { fetchPostFromSlug } from "@/services/postService";
+import { fetchPostFromSlug, incrementPostViews } from "@/services/postService";
 
 export default async function Post({ params }: { params: { id: string } }) {
   const post = await fetchPostFromSlug(params.id);
@@ -10,6 +10,9 @@ export default async function Post({ params }: { params: { id: string } }) {
   if (post && post.content) {
     post.content = post.content.replace(/\\n/g, "\n");
   }
+
+  // Increment the number of views
+  await incrementPostViews(post.id);
 
   const content: string = post?.content
     ? (await remark().use(html).process(post.content)).toString()

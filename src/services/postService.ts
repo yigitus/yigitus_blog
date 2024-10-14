@@ -10,6 +10,7 @@ export type Post = {
   tags: string[];
   featured_image: string | null;
   description: string | null;
+  reads: number;
 };
 
 /**
@@ -67,4 +68,41 @@ export async function fetchPostDescription(id: string): Promise<string> {
     throw new Error(`Post with ID ${id} does not have a description`);
   }
   return post.description;
+}
+
+/*
+ * Add one to the number of views of a post.
+ * @param id The id of the post.
+ * @returns The updated number of views.
+ * @throws If the post does not exist.
+ */
+export async function incrementPostViews(id: string): Promise<number> {
+  const post = await prisma.post.findUnique({
+    where: { id },
+  });
+  if (!post) {
+    throw new Error(`Post with ID ${id} does not exist`);
+  }
+  const updatedPost = await prisma.post.update({
+    where: { id },
+    data: { reads: post.reads + 1 },
+  });
+  return updatedPost.reads;
+}
+
+/**
+ * Fetch popular posts from the database.
+ * @param limit The number of posts to fetch.
+ * @returns The list of popular posts.
+ */
+
+export async function fetchPopularPosts(limit: number = 5): Promise<Post[]> {
+  const posts = await prisma.post.findMany({
+    where: { published: true },
+    orderBy: {
+      reads: "desc",
+    },
+    take: limit,
+  });
+  return posts;
 }

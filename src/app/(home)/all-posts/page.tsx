@@ -101,7 +101,7 @@ export default function AllPosts() {
                 href={"/post/" + post.slug}
                 className={styles.read_more}
               >
-                Read more
+                Read More
               </a>
             </div>
           </div>
