@@ -1,0 +1,119 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    padding-top: 85px;
+    padding-left: 200px;
+    padding-right: 100px;
+    padding-bottom: 100px;
+  }
+  
+  .posts {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding-left: 16px;
+    padding-top: 16px;
+  }
+  
+  .container h2 {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 16px;
+    margin-left: 16px;
+  }
+  
+  .post .featured_image {
+    width: 100%;
+    height: 235px;
+    object-fit: cover;
+    border-radius: 0.5rem;
+    margin-bottom: 6px;
+  }
+  
+  .post .description {
+    font-size: 1rem;
+    color: var(--foreground-muted);
+    margin-top: -12px;
+    margin-bottom: 16px;
+  }
+  
+  .post {
+    display: flex;
+    flex-direction: column;
+    padding: 16px;
+    background-color: var(--background);
+    box-shadow: 0 7px 10px 0px rgba(0, 0, 0, 0.1);
+    border-radius: 0.5rem;
+    transition: box-shadow 0.3s;
+  }
+  
+  .post:hover {
+    box-shadow: 0 7px 10px 5px rgba(0, 0, 0, 0.2);
+  }
+  
+  .post .title {
+    font-size: 1.4rem;
+    font-weight: bold;
+    /* min-height: 5rem; */
+    margin-bottom: 16px;
+  }
+  
+  .post .metadata {
+    display: flex;
+    /* min-height: 2rem; */
+    justify-content: space-between;
+    margin-top: auto;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.9rem;
+    color: var(--foreground-muted);
+  }
+  
+  .post .metadata time {
+    font-weight: bold;
+    color: var(--foreground-muted);
+  }
+  
+  .post .tags {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 6px;
+  }
+  
+  .post .tag {
+    font-size: 0.9rem;
+    padding: 6px 12px;
+    border-radius: 3px;
+    background-color: var(--primary);
+    color: white;
+    font-weight: bold;
+  }
+  
+  .post .read_more {
+    /* margin-top: 0px; */
+    font-size: 1.2rem;
+    color: var(--primary);
+    font-weight: bold;
+    text-decoration: underline;
+  }
+  
+  .see_more {
+    display: flex;
+    justify-content: center;
+    font-size: 1.5rem;
+    color: var(--primary);
+    border: none;
+    font-weight: bold;
+    text-decoration: underline;
+    margin-top: 1rem;
+  }
+  
+  .all_posts_loaded {
+    display: flex;
+    justify-content: center;
+    font-size: 1.5rem;
+    color: var(--foreground-muted);
+    font-weight: bold;
+    margin-top: 1rem;
+  }

@@ -3,8 +3,8 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "../globals.css";
 import "./layout.css";
-import Header from "@/components/Header";
-import Sidebar from "@/components/Sidebar";
+import { Header } from "@/components";
+import { Sidebar } from "@/components";
 
 const geistSans = localFont({
   src: "../fonts/GeistVF.woff",

@@ -24,6 +24,7 @@
   margin-top: 16px;
   margin-left: 16px;
   margin-bottom: 32px;
+  padding-right: 16px;
   width: 100%;
   box-sizing: border-box;
 }
@@ -115,7 +116,8 @@
 
 .see_all {
   display: flex;
-  justify-content: center;
+  /* justify-content: center; */
+  margin-left: 16px;
   font-size: 1.5rem;
   color: var(--primary);
   font-weight: bold;

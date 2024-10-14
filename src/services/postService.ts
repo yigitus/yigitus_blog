@@ -95,7 +95,6 @@ export async function incrementPostViews(id: string): Promise<number> {
  * @param limit The number of posts to fetch.
  * @returns The list of popular posts.
  */
-
 export async function fetchPopularPosts(limit: number = 5): Promise<Post[]> {
   const posts = await prisma.post.findMany({
     where: { published: true },
@@ -103,6 +102,36 @@ export async function fetchPopularPosts(limit: number = 5): Promise<Post[]> {
       reads: "desc",
     },
     take: limit,
+  });
+  return posts;
+}
+
+/**
+ * Search for posts in the database.
+ * @param query The search query.
+ * @param limit The number of posts to fetch.
+ * @returns The list of posts.
+ */
+export async function searchPosts(
+  query: string,
+  page: number,
+  limit: number = 10
+): Promise<Post[]> {
+  const offset = (page - 1) * limit; // Calculate offset based on page and limit
+
+  const posts = await prisma.post.findMany({
+    where: {
+      published: true,
+      OR: [
+        { title: { contains: query, mode: "insensitive" } },
+        { tags: { hasSome: [query] } },
+      ],
+    },
+    orderBy: {
+      publish_date: "desc",
+    },
+    take: limit,
+    skip: offset,
   });
   return posts;
 }
