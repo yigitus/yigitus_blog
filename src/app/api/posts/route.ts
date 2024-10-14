@@ -1,16 +1,17 @@
 import { fetchPublishedPosts } from "@/services/postService";
 import { NextResponse } from "next/server";
+import { NextRequest } from "next/server";
 
-export async function GET(request: { url: string | URL }) {
-  const { searchParams } = new URL(request.url);
+export async function GET(request: NextRequest) {
+  const { searchParams } = request.nextUrl;
   const page = parseInt(searchParams.get("page") || "1");
   const limit = parseInt(searchParams.get("limit") || "10");
 
   const posts = await fetchPublishedPosts(limit, page);
 
   if (posts && posts.length > 0) {
-    return new NextResponse(JSON.stringify(posts), { status: 200 });
+    return NextResponse.json(posts, { status: 200 });
   } else {
-    return new NextResponse(null, { status: 204 });
+    return NextResponse.json(null, { status: 204 });
   }
 }
