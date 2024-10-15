@@ -4,6 +4,7 @@ import styles from "./page.module.css";
 import { Post } from "../../../services/postService";
 import { useEffect, useState, useRef } from "react";
 import { useSearchParams } from "next/navigation";
+const isProduction: boolean = (process.env.NODE_ENV ?? "") === "production";
 
 export default function SearchResults() {
   const [allPosts, setAllPosts] = useState<Post[]>([]);
@@ -15,7 +16,7 @@ export default function SearchResults() {
   const initialRender = useRef(true); //To prevent strict mode double rendering
 
   async function fetchMorePosts() {
-    if (initialRender.current) {
+    if (initialRender.current && !isProduction) {
       //To prevent strict mode double rendering
       initialRender.current = false;
     } else {
@@ -30,12 +31,17 @@ export default function SearchResults() {
           throw new Error(`Error fetching posts: ${res.statusText}`);
         }
 
-        if (res.status === 204) {
+        if (res.status !== 200) {
           setIsAllPostsLoaded(true);
-          return;
+          return [];
         }
 
         const newPosts = await res.json();
+
+        if (newPosts.length === 0) {
+          setIsAllPostsLoaded(true);
+          return [];
+        }
 
         if (!Array.isArray(newPosts)) {
           throw new Error("Invalid response format");
